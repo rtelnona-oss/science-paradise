@@ -1,0 +1,2099 @@
+/* ==========================================================================
+   CSS لـ منصفة جنة العلوم - Science Paradise
+   تصميم مزخرف ومريح للعين مع رسومات وحركات علمية تفاعلية جذابة للطلاب
+   ========================================================================== */
+
+/* تعريف المتغيرات ولوحة الألوان */
+:root {
+  --primary-color: #436d58;       /* أخضر هادئ (زيتوني/حكيم) */
+  --primary-dark: #2d4c3d;        /* أخضر داكن مريح للعين */
+  --primary-light: #e8f0eb;       /* كريمي مخضر فاتح جدًا */
+  --accent-gold: #d4a373;         /* ذهبي مطفي دافئ للزخارف والأوسمة */
+  --accent-gold-dark: #b88656;    /* ذهبي داكن */
+  --bg-cream: #fbf9f4;            /* خلفية كريمية دافئة مريحة */
+  --text-dark: #2c3531;           /* لون نصوص داكن مائل للأخضر الرمادي للقراءة */
+  --text-light: #7c8a83;          /* نصوص ثانوية هادئة */
+  --white: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(67, 109, 88, 0.15);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(67, 109, 88, 0.08), 0 4px 6px -2px rgba(67, 109, 88, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(67, 109, 88, 0.12), 0 10px 10px -5px rgba(67, 109, 88, 0.08);
+  --font-arabic: 'Tajawal', 'Cairo', sans-serif;
+  --font-english: 'Outfit', sans-serif;
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* التصفير الأساسي وتجهيز الخطوط */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-arabic);
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* للتطبيقات الإنجليزية */
+.english-track {
+  font-family: var(--font-english);
+  direction: ltr;
+}
+
+/* ==========================================================================
+   عناصر الخلفية العلمية والتفاعلية المتحركة (Science Graphics)
+   ========================================================================== */
+.science-bg-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.6;
+}
+
+/* 1. الكواكب (الفضاء) */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: inset -15px -15px 30px rgba(0,0,0,0.1);
+  animation: floatPlanet 18s ease-in-out infinite alternate;
+}
+.planet-1 {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 30% 30%, #e9c46a, #e76f51);
+  top: 10%;
+  right: -5%;
+  animation-duration: 25s;
+}
+.planet-1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 20px;
+  border: 4px solid rgba(233, 196, 106, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-25deg);
+}
+.planet-2 {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, #90e0ef, #0077b6);
+  bottom: 15%;
+  left: 2%;
+  animation-duration: 16s;
+}
+
+/* 2. شريط الـ DNA (الأحياء) */
+.dna-helix {
+  position: absolute;
+  top: 40%;
+  right: 2%;
+  width: 40px;
+  height: 120px;
+  background-image: radial-gradient(var(--primary-color) 4px, transparent 4px);
+  background-size: 20px 20px;
+  opacity: 0.25;
+  animation: pulseDNA 4s ease-in-out infinite alternate;
+}
+
+/* 3. الذرة (الفيزياء والكيمياء) */
+.atom-container {
+  position: absolute;
+  bottom: 8%;
+  right: 5%;
+  width: 100px;
+  height: 100px;
+  animation: floatPlanet 20s ease-in-out infinite alternate;
+}
+.atom-nucleus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: var(--accent-gold);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px var(--accent-gold);
+}
+.atom-orbit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(67, 109, 88, 0.25);
+  border-radius: 50%;
+}
+.orbit-1 {
+  transform: rotateX(70deg) rotateY(20deg);
+  animation: rotateOrbit1 6s linear infinite;
+}
+.orbit-2 {
+  transform: rotateX(70deg) rotateY(-40deg);
+  animation: rotateOrbit2 8s linear infinite;
+}
+.electron {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* فقاعات كيميائية صاعدة */
+.bubble-stream {
+  position: absolute;
+  bottom: 0;
+  left: 30%;
+  width: 40%;
+  height: 100%;
+}
+.bubble-particle {
+  position: absolute;
+  bottom: -20px;
+  background: rgba(144, 224, 239, 0.4);
+  border-radius: 50%;
+  animation: riseBubble 12s infinite linear;
+}
+
+/* حركات الأنيميشن الخلفية */
+@keyframes floatPlanet {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-30px) rotate(15deg); }
+}
+@keyframes pulseDNA {
+  0% { opacity: 0.15; transform: scale(0.9); }
+  100% { opacity: 0.35; transform: scale(1.1); }
+}
+@keyframes rotateOrbit1 {
+  0% { transform: rotateX(70deg) rotateY(20deg) rotateZ(0deg); }
+  100% { transform: rotateX(70deg) rotateY(20deg) rotateZ(360deg); }
+}
+@keyframes rotateOrbit2 {
+  0% { transform: rotateX(70deg) rotateY(-40deg) rotateZ(0deg); }
+  100% { transform: rotateX(70deg) rotateY(-40deg) rotateZ(360deg); }
+}
+@keyframes riseBubble {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+}
+
+
+/* ==========================================================================
+   تصميم تميمة بروفيسور بابلز (Professor Bubbles Mascot)
+   ========================================================================== */
+.bubbles-mascot {
+  position: relative;
+  width: 180px;
+  height: 220px;
+  margin: 0 auto 20px;
+}
+
+/* الكأس المخبري الزجاجي */
+.beaker {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 120px;
+  border: 6px solid var(--primary-dark);
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 20px rgba(67, 109, 88, 0.15);
+  animation: gentleBounce 3s ease-in-out infinite alternate;
+}
+.beaker::before { /* فوهة الأنبوب */
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 10px;
+  border: 5px solid var(--primary-dark);
+  border-radius: 5px;
+  background-color: var(--bg-cream);
+}
+
+/* السائل الأخضر أو الأزرق المتفاعل */
+.beaker-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(180deg, #74c69d, #40916c);
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  overflow: hidden;
+  animation: liquidWave 3s ease-in-out infinite alternate;
+}
+.beaker-liquid.sad {
+  background: linear-gradient(180deg, #90e0ef, #0077b6) !important;
+}
+
+/* الفقاعات المتصاعدة من السائل */
+.beaker-bubble {
+  position: absolute;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+}
+.bubble-a {
+  width: 12px;
+  height: 12px;
+  bottom: 70px;
+  left: 20px;
+  animation: popBubble 2s infinite ease-in;
+}
+.bubble-b {
+  width: 8px;
+  height: 8px;
+  bottom: 80px;
+  right: 25px;
+  animation: popBubble 2.5s infinite ease-in;
+  animation-delay: 0.5s;
+}
+
+/* العيون الطريفة */
+.beaker-eyes {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 12px;
+  z-index: 10;
+}
+.eye {
+  width: 24px;
+  height: 24px;
+  background-color: var(--white);
+  border: 3px solid var(--primary-dark);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: blinkEye 4s infinite linear;
+}
+.pupil {
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-dark);
+  border-radius: 50%;
+  position: absolute;
+  animation: eyeRoll 5s infinite ease-in-out;
+}
+
+/* الفم المبتسم */
+.beaker-mouth {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: 0 0 15px 15px;
+  z-index: 10;
+}
+.beaker-mouth.sad {
+  border-bottom: 0;
+  border-top: 4px solid var(--primary-dark) !important;
+  border-radius: 15px 15px 0 0 !important;
+  top: 60% !important;
+}
+
+/* النظارات العلمية الذكية */
+.glasses {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86px;
+  height: 28px;
+  z-index: 12;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.glasses::before, .glasses::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--accent-gold);
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.1);
+  box-shadow: 0 0 8px rgba(212, 163, 115, 0.4);
+}
+.glasses::before { margin-left: 2px; }
+.glasses::after { margin-right: 2px; }
+
+/* جسر النظارة */
+.glasses-bridge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 3px;
+  background-color: var(--accent-gold);
+}
+
+/* قبعة التخرج العلمية */
+.grad-hat {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-10deg);
+  width: 70px;
+  height: 20px;
+  z-index: 15;
+}
+.grad-hat::before { /* السطح المربع */
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 25px;
+  background-color: var(--text-dark);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.grad-hat::after { /* القاعدة */
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 16px;
+  background-color: var(--text-dark);
+  border-radius: 4px;
+}
+
+/* حركات التميمة */
+@keyframes gentleBounce {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-10px); }
+}
+@keyframes liquidWave {
+  0% { transform: skewY(-2deg); }
+  100% { transform: skewY(2deg); }
+}
+@keyframes popBubble {
+  0% { transform: translateY(0) scale(0.4); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-40px) scale(1.1); opacity: 0; }
+}
+@keyframes blinkEye {
+  0%, 95%, 100% { transform: scaleY(1); }
+  98% { transform: scaleY(0.1); }
+}
+@keyframes eyeRoll {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(0, -2px); }
+}
+
+/* التميمة الحزينة (طلب الاشتراك) */
+.sad-animation {
+  animation: sadShake 4s infinite alternate;
+}
+.beaker-eyes.sad .eye {
+  height: 20px;
+  border-radius: 12px 12px 2px 2px;
+}
+.beaker-eyes.sad .pupil {
+  transform: translateY(4px);
+}
+.tear {
+  position: absolute;
+  top: 55px;
+  left: 32px;
+  width: 8px;
+  height: 8px;
+  background-color: #00b4d8;
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+  animation: dropTear 2s infinite ease-in;
+}
+@keyframes dropTear {
+  0% { transform: translate(0,0) rotate(45deg) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translate(-5px, 30px) rotate(45deg) scale(1); opacity: 0; }
+}
+@keyframes sadShake {
+  0%, 100% { transform: translateX(-50%) rotate(0); }
+  10%, 30%, 50% { transform: translateX(-52%) rotate(-1deg); }
+  20%, 40% { transform: translateX(-48%) rotate(1deg); }
+}
+
+
+/* ==========================================================================
+   فقاعات التخاطب الكرتونية (Speech Bubbles)
+   ========================================================================== */
+.speech-bubble {
+  position: absolute;
+  background-color: var(--white);
+  border: 4px solid var(--primary-color);
+  border-radius: 20px;
+  padding: 12px 16px;
+  width: 250px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+  bottom: 145px;
+  right: -100px;
+  z-index: 20;
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 30px;
+  border-width: 15px 15px 0 0;
+  border-style: solid;
+  border-color: var(--primary-color) transparent;
+  display: block;
+  width: 0;
+}
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 32px;
+  border-width: 11px 11px 0 0;
+  border-style: solid;
+  border-color: var(--white) transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+}
+
+.subscribe-speech {
+  position: relative;
+  background-color: var(--white);
+  border: 4px solid #0077b6;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #03045e;
+  box-shadow: var(--shadow-md);
+  margin-top: 10px;
+  z-index: 10;
+}
+.subscribe-speech::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 15px 15px 15px;
+  border-style: solid;
+  border-color: transparent transparent #0077b6 transparent;
+  display: block;
+  width: 0;
+}
+
+
+/* ==========================================================================
+   شاشة التسجيل وتحديد المسار (Onboarding Overlay)
+   ========================================================================== */
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(245, 242, 235, 0.96);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.onboarding-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.onboarding-card {
+  background: var(--glass-bg);
+  border: 6px double var(--primary-color);
+  border-radius: 35px;
+  padding: 40px;
+  width: 100%;
+  max-width: 580px;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: visible;
+}
+
+.logo-title {
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--primary-dark);
+  margin-bottom: 25px;
+}
+.logo-sub {
+  display: block;
+  font-family: var(--font-english);
+  font-size: 18px;
+  color: var(--accent-gold-dark);
+  margin-top: -5px;
+  letter-spacing: 1px;
+}
+
+/* استمارة التسجيل */
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: right;
+}
+.english-track .form-group {
+  text-align: left;
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.form-label-bold {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(67, 109, 88, 0.2);
+  border-radius: 12px;
+  background-color: var(--white);
+  color: var(--text-dark);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(67, 109, 88, 0.1);
+}
+
+/* كروت تحديد المسار (علوم / Science) */
+.track-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 5px;
+}
+.track-selector input[type="radio"] {
+  display: none;
+}
+.track-card {
+  border: 3px solid rgba(67, 109, 88, 0.15);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background-color: var(--white);
+  transition: var(--transition-smooth);
+  text-align: center;
+}
+.track-card i {
+  font-size: 28px;
+  color: var(--primary-color);
+  transition: var(--transition-smooth);
+}
+.track-card span {
+  font-weight: 700;
+  font-size: 15px;
+}
+.track-card small {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.track-selector input[type="radio"]:checked + .track-card {
+  background-color: var(--primary-light);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.track-selector input[type="radio"]:checked + .track-card i {
+  color: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+/* الأزرار الفخمة */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 10px rgba(67, 109, 88, 0.2);
+  font-family: inherit;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(67, 109, 88, 0.3);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--primary-dark);
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.btn-secondary:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-danger {
+  background-color: #e63946;
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.btn-danger:hover {
+  background-color: #d62828;
+}
+
+/* نبضات لشد انتباه الطلاب */
+.animate-pulse {
+  animation: pulseButton 2s infinite;
+}
+@keyframes pulseButton {
+  0% { box-shadow: 0 0 0 0 rgba(67, 109, 88, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(67, 109, 88, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(67, 109, 88, 0); }
+}
+
+
+/* ==========================================================================
+   التطبيق الرئيسي (Main App Layout)
+   ========================================================================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* شريط التنقل العلوي (Header) */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: var(--glass-bg);
+  border-bottom: 3px double var(--primary-color);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.english-track .app-header {
+  flex-direction: row;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.logo-icon-spin {
+  font-size: 32px;
+  color: var(--primary-color);
+  animation: spinSlow 12s linear infinite;
+}
+.logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+.logo-subtext {
+  display: block;
+  font-size: 11px;
+  font-family: var(--font-english);
+  color: var(--accent-gold-dark);
+  margin-top: -3px;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* بطاقة الطالب */
+.student-info-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--primary-light);
+  border: 2px solid rgba(67, 109, 88, 0.15);
+  border-radius: 12px;
+  padding: 6px 12px;
+}
+.student-info-badge i {
+  font-size: 18px;
+  color: var(--primary-color);
+}
+.student-name {
+  display: block;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--primary-dark);
+}
+.student-grade-badge {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-gold-dark);
+  background-color: var(--white);
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-top: 1px;
+}
+
+/* مبدل الترمات */
+.term-switcher-container {
+  display: flex;
+  background-color: rgba(67, 109, 88, 0.08);
+  padding: 4px;
+  border-radius: 10px;
+}
+.term-btn {
+  background: none;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.term-btn.active {
+  background-color: var(--white);
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+/* شارة الاشتراك التفاعلية */
+.btn-subscribe-badge {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.premium-glow {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+  color: var(--white);
+  box-shadow: 0 0 10px rgba(212, 163, 115, 0.4);
+  animation: glowEffect 2s infinite alternate;
+}
+.activated-glow {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+  color: var(--white) !important;
+  box-shadow: 0 0 10px rgba(67, 109, 88, 0.3) !important;
+  animation: none !important;
+}
+
+@keyframes glowEffect {
+  0% { box-shadow: 0 0 5px rgba(212, 163, 115, 0.4); }
+  100% { box-shadow: 0 0 15px rgba(212, 163, 115, 0.8); }
+}
+
+.btn-teacher-panel, .btn-change-student {
+  background-color: var(--white);
+  border: 2px solid rgba(67, 109, 88, 0.15);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary-dark);
+  transition: var(--transition-smooth);
+}
+.btn-teacher-panel:hover, .btn-change-student:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-color);
+}
+
+
+/* ==========================================================================
+   مساحة المحتوى الرئيسية (Main App Section)
+   ========================================================================== */
+.app-main {
+  flex: 1;
+  padding: 30px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* بنر الترحيب العريض */
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(67, 109, 88, 0.15), rgba(45, 76, 61, 0.05));
+  border: 3px double var(--primary-color);
+  border-radius: 24px;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  backdrop-filter: blur(4px);
+  position: relative;
+}
+.english-track .welcome-banner {
+  flex-direction: row-reverse;
+  text-align: left;
+}
+
+.banner-content h1 {
+  font-size: 22px;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+.banner-content p {
+  font-size: 14px;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+/* مصغر التميمة في البنر */
+.banner-mascot {
+  position: relative;
+  width: 130px;
+  height: 100px;
+}
+.mini-mascot {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  display: flex;
+  align-items: center;
+}
+.beaker.mini {
+  width: 45px;
+  height: 55px;
+  border-width: 3px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  animation-duration: 2s;
+}
+.beaker.mini::before {
+  top: -8px;
+  width: 20px;
+  height: 4px;
+  border-width: 2px;
+}
+.beaker-eyes.mini .eye.mini {
+  width: 10px;
+  height: 10px;
+  border-width: 1px;
+}
+.beaker-eyes.mini {
+  padding: 0 4px;
+}
+.beaker-mouth.mini {
+  width: 8px;
+  height: 4px;
+  border-bottom-width: 2px;
+  top: 50%;
+}
+.glasses.mini {
+  width: 40px;
+  height: 12px;
+  top: 25%;
+}
+.glasses.mini::before, .glasses.mini::after {
+  width: 14px;
+  height: 14px;
+  border-width: 1px;
+}
+.mini-speech {
+  position: absolute;
+  width: 140px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--white);
+  border: 2px solid var(--primary-color);
+  padding: 6px;
+  border-radius: 10px;
+  right: 55px;
+  bottom: 15px;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+.mini-speech::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: 8px;
+  border-width: 4px 0 4px 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--primary-color);
+}
+.english-track .mini-speech {
+  left: 55px;
+  right: auto;
+}
+.english-track .mini-speech::after {
+  left: -8px;
+  right: auto;
+  border-width: 4px 8px 4px 0;
+  border-color: transparent var(--primary-color) transparent transparent;
+}
+
+/* قائمة الدروس */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+.section-title i {
+  font-size: 22px;
+  color: var(--primary-color);
+}
+.section-title h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+/* شبكة كروت الدروس */
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* بطاقة الدرس الفريدة */
+.lesson-card {
+  background: var(--glass-bg);
+  border: 3px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-smooth);
+  backdrop-filter: blur(6px);
+}
+.lesson-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-lg);
+}
+
+/* بادج الحالة (مجاني / مقفل / مكتمل) */
+.lesson-status-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.english-track .lesson-status-badge {
+  left: auto;
+  right: 15px;
+}
+
+.badge-free {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border: 1px solid rgba(67, 109, 88, 0.2);
+}
+.badge-locked {
+  background-color: #fdf0d5;
+  color: var(--accent-gold-dark);
+  border: 1px solid rgba(212, 163, 115, 0.3);
+}
+.badge-completed {
+  background-color: #d8f3dc;
+  color: #1b4332;
+  border: 1px solid #74c69d;
+}
+
+.lesson-info {
+  margin-top: 15px;
+}
+.lesson-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+.lesson-card-desc {
+  font-size: 13px;
+  color: var(--text-dark);
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.english-track .lesson-footer {
+  justify-content: flex-start;
+}
+
+.lesson-card.locked {
+  opacity: 0.9;
+  background-color: rgba(245, 242, 235, 0.7);
+}
+.lesson-card.locked:hover {
+  border-color: var(--accent-gold);
+}
+
+
+/* ==========================================================================
+   شاشات الحوار المنبثقة (Modals)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(45, 76, 61, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: var(--white);
+  border-radius: 28px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  max-width: 900px;
+  width: 100%;
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  z-index: 100;
+}
+.modal-close:hover {
+  color: var(--primary-dark);
+  transform: rotate(90deg);
+}
+
+/* 1. نافذة الدرس والاختبار (Lesson Modal) */
+.lesson-modal-content {
+  max-width: 1050px;
+  border: 4px solid var(--primary-color);
+}
+
+.lesson-modal-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  min-height: 550px;
+  max-height: 85vh;
+}
+@media (max-width: 768px) {
+  .lesson-modal-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
+/* عمود الفيديو والشرح */
+.lesson-video-column {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--bg-cream);
+  border-left: 3px solid rgba(67, 109, 88, 0.15);
+}
+.english-track .lesson-video-column {
+  border-left: none;
+  border-right: 3px solid rgba(67, 109, 88, 0.15);
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* نسبة العرض للارتفاع 16:9 */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 4px solid var(--primary-dark);
+  box-shadow: var(--shadow-md);
+}
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lesson-details h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 10px;
+}
+.lesson-details p {
+  font-size: 13px;
+  color: var(--text-dark);
+}
+
+/* عمود الاختبار التفاعلي */
+.lesson-quiz-column {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+}
+
+.quiz-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.quiz-header {
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 15px;
+}
+.quiz-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.quiz-header h3 i {
+  color: var(--accent-gold);
+}
+
+.quiz-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--primary-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-gold), var(--primary-color));
+  transition: width 0.4s ease;
+}
+
+.quiz-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quiz-question-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-option {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--white);
+  border: 2px solid rgba(67, 109, 88, 0.15);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: right;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.english-track .btn-option {
+  text-align: left;
+}
+
+.btn-option:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-color);
+  transform: translateX(-3px);
+}
+.english-track .btn-option:hover {
+  transform: translateX(3px);
+}
+
+.btn-option.correct {
+  background-color: #d8f3dc !important;
+  border-color: #2d6a4f !important;
+  color: #1b4332 !important;
+  animation: correctAnswerGlow 0.4s ease;
+}
+.btn-option.wrong {
+  background-color: #ffe5ec !important;
+  border-color: #d90429 !important;
+  color: #60000a !important;
+  animation: shakeWrong 0.4s ease;
+}
+
+@keyframes correctAnswerGlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+@keyframes shakeWrong {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* نتيجة الاختبار */
+.quiz-result {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  animation: scaleIn 0.4s ease;
+}
+.trophy-spin {
+  font-size: 50px;
+  color: var(--accent-gold);
+  animation: rotateTrophy 2s ease-in-out infinite alternate;
+}
+@keyframes rotateTrophy {
+  0% { transform: rotate(-10deg) scale(0.9); }
+  100% { transform: rotate(10deg) scale(1.1); }
+}
+
+.score-text {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+.result-message {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 10px;
+}
+
+
+/* ==========================================================================
+   2. نافذة الاشتراك المميز (Subscribe Modal Content)
+   ========================================================================== */
+.subscribe-modal-content {
+  max-width: 780px;
+  border: 4px solid var(--accent-gold);
+}
+
+.subscribe-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  min-height: 480px;
+}
+@media (max-width: 680px) {
+  .subscribe-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.subscribe-mascot {
+  background-color: #e6f0fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-left: 3px solid rgba(212, 163, 115, 0.2);
+}
+.english-track .subscribe-mascot {
+  border-left: none;
+  border-right: 3px solid rgba(212, 163, 115, 0.2);
+}
+
+.subscribe-details {
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.subscribe-details h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+.sub-intro-text {
+  font-size: 13px;
+  color: var(--text-dark);
+}
+
+/* بطاقة الاتصال */
+.contact-card {
+  background-color: var(--primary-light);
+  border: 2px dashed var(--primary-color);
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+}
+.contact-card p {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+.phone-number {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--white);
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+.phone-number:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+.whatsapp-icon {
+  color: #25d366;
+  font-size: 22px;
+}
+.phone-link {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+.whatsapp-note {
+  display: block;
+  font-size: 10px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* نموذج إدخال الكود */
+.activation-form {
+  border-top: 2px solid var(--primary-light);
+  padding-top: 15px;
+}
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.btn-activate {
+  background-color: var(--accent-gold-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+  font-size: 13px;
+}
+.btn-activate:hover {
+  background-color: var(--accent-gold);
+}
+.error-text {
+  font-size: 11px;
+  color: #e63946;
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   3. لوحة المعلم والتحكم (Admin Panel Modal Content)
+   ========================================================================== */
+.auth-modal-content {
+  max-width: 420px;
+  padding: 30px;
+  border: 4px solid var(--primary-color);
+  text-align: center;
+}
+.auth-subtext {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.dashboard-modal-content {
+  max-width: 1100px;
+  width: 95%;
+  height: 90vh;
+  border: 4px solid var(--primary-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  padding: 20px 25px;
+  background-color: var(--primary-light);
+  border-bottom: 2px solid rgba(67, 109, 88, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dashboard-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+.dashboard-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  flex: 1;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
+.dashboard-panel {
+  padding: 25px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.dashboard-panel:first-child {
+  border-left: 2px solid rgba(67, 109, 88, 0.15);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.textarea-short {
+  height: 80px;
+  resize: none;
+}
+
+/* منشئ أسئلة الاختبار */
+.admin-quiz-creation {
+  background-color: var(--bg-cream);
+  border: 2px dashed rgba(67, 109, 88, 0.25);
+  border-radius: 16px;
+  padding: 15px;
+}
+.admin-quiz-creation h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+.question-item {
+  border-bottom: 2px dashed rgba(67, 109, 88, 0.15);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.question-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* جدول الطلاب المشتركين */
+.students-list-wrapper {
+  border: 1px solid rgba(67, 109, 88, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 250px;
+}
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+  font-size: 12px;
+}
+.students-table th, .students-table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(67, 109, 88, 0.1);
+}
+.students-table th {
+  background-color: var(--primary-light);
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.students-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ==========================================================================
+   أسفل الصفحة وتوافق الشاشات (Footer & Responsive)
+   ========================================================================== */
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  border-top: 2px solid var(--primary-light);
+  background-color: var(--white);
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  .header-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .welcome-banner {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 20px;
+  }
+}
+
+
+/* ==========================================================================
+   🤖 المساعد الذكي العائم "بروفيسور بابلز" (AI Chat Widget)
+   ========================================================================== */
+
+/* الحاوية الرئيسية للمساعد العائم */
+.ai-widget-container {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* الزر العائم الرئيسي (الكأس الصغير المتحرك) */
+.ai-floating-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border: 3px solid var(--accent-gold);
+  box-shadow: 0 8px 25px rgba(67, 109, 88, 0.35), 0 0 20px rgba(212, 163, 115, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  position: relative;
+  animation: floatWidget 4s ease-in-out infinite alternate;
+}
+
+.ai-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(67, 109, 88, 0.45), 0 0 30px rgba(212, 163, 115, 0.35);
+}
+
+@keyframes floatWidget {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* أفاتار الكأس داخل الزر */
+.ai-btn-avatar {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* كأس الشات المصغر */
+.beaker.mini-chat {
+  width: 32px;
+  height: 40px;
+  border: 3px solid rgba(255,255,255,0.9);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: rgba(255,255,255,0.15);
+  position: relative;
+}
+.beaker.mini-chat::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 4px;
+  border: 2px solid rgba(255,255,255,0.9);
+  border-radius: 3px;
+  background-color: transparent;
+}
+.beaker.mini-chat .beaker-liquid {
+  height: 55%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+
+/* Tooltip التوضيحي بجانب الزر */
+.ai-btn-tooltip {
+  position: absolute;
+  right: 80px;
+  background-color: var(--primary-dark);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.ai-floating-btn:hover .ai-btn-tooltip {
+  opacity: 1;
+}
+.ai-btn-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -7px;
+  transform: translateY(-50%);
+  border-width: 6px 0 6px 7px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--primary-dark);
+}
+.english-track .ai-btn-tooltip {
+  right: auto;
+  left: 80px;
+}
+.english-track .ai-btn-tooltip::after {
+  right: auto;
+  left: -7px;
+  border-width: 6px 7px 6px 0;
+  border-color: transparent var(--primary-dark) transparent transparent;
+}
+
+/* نافذة المحادثة */
+.ai-chat-window {
+  width: 340px;
+  height: 480px;
+  background: var(--white);
+  border: 3px solid var(--primary-color);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: bottom left;
+}
+
+@keyframes chatSlideIn {
+  from { transform: scale(0.7) translateY(30px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.chat-slide-in {
+  animation: chatSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* رأس نافذة الشات */
+.chat-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+}
+.chat-header-info i {
+  font-size: 22px;
+}
+.chat-header-info h4 {
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.chat-status {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.85;
+  display: block;
+}
+.btn-close-chat {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--white);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: var(--transition-smooth);
+}
+.btn-close-chat:hover {
+  background: rgba(255,255,255,0.3);
+  transform: rotate(90deg);
+}
+
+/* منطقة الرسائل */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f8f9fa;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(67,109,88,0.2); border-radius: 2px; }
+
+/* رسائل عامة */
+.chat-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  animation: msgFadeIn 0.3s ease;
+}
+@keyframes msgFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bot-msg { flex-direction: row; }
+.user-msg { flex-direction: row-reverse; }
+.english-track .bot-msg { flex-direction: row; }
+.english-track .user-msg { flex-direction: row-reverse; }
+
+.bot-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+/* فقاعات الرسائل */
+.msg-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 80%;
+  word-break: break-word;
+}
+.bot-bubble {
+  background-color: var(--white);
+  border: 2px solid rgba(67, 109, 88, 0.12);
+  color: var(--text-dark);
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: var(--shadow-sm);
+}
+.user-bubble {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--white);
+  border-radius: 16px 16px 4px 16px;
+  text-align: right;
+}
+.english-track .user-bubble { text-align: left; }
+
+/* مؤشر الكتابة النقاط الثلاث */
+.typing-bubble {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 16px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  animation: typingDot 1.2s infinite ease-in-out;
+}
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* أزرار الاقتراحات السريعة */
+.chat-suggestions {
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background-color: var(--white);
+  border-top: 1px solid rgba(67,109,88,0.08);
+  flex-shrink: 0;
+}
+.chat-suggest-btn {
+  background-color: var(--primary-light);
+  border: 1.5px solid rgba(67, 109, 88, 0.2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+  white-space: nowrap;
+  max-width: 145px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-suggest-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* مربع إدخال النص */
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 2px solid var(--primary-light);
+  background-color: var(--white);
+  flex-shrink: 0;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 9px 14px;
+  border: 2px solid rgba(67, 109, 88, 0.15);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  transition: var(--transition-smooth);
+}
+.chat-input-area input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: var(--white);
+}
+.btn-send-chat {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+}
+.btn-send-chat:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(67, 109, 88, 0.3);
+}
+
+/* تعديل موضع المساعد للشاشات الصغيرة */
+@media (max-width: 600px) {
+  .ai-widget-container {
+    bottom: 15px;
+    left: 15px;
+  }
+  .ai-chat-window {
+    width: calc(100vw - 30px);
+    height: 400px;
+  }
+}

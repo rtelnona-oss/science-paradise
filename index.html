@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جنة العلوم - Science Paradise</title>
+
+  <!-- خطوط Google Fonts لتصميم عربي وإنجليزي فائق الجمال والدقة -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+
+  <!-- مكتبة أيقونات FontAwesome للرموز العلمية والتفاعلية -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- تأثير قصاصات الورق الملونة (النجاح) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- ملف التنسيق -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="science-theme">
+
+  <!-- عناصر الخلفية العلمية المتحركة -->
+  <div class="science-bg-elements">
+    <div class="planet planet-1"></div>
+    <div class="planet planet-2"></div>
+    <div class="dna-helix"></div>
+    <div class="atom-container">
+      <div class="atom-nucleus"></div>
+      <div class="atom-orbit orbit-1">
+        <div class="electron"></div>
+      </div>
+      <div class="atom-orbit orbit-2">
+        <div class="electron"></div>
+      </div>
+    </div>
+    <div class="bubble-stream" id="bubbleStream"></div>
+  </div>
+
+  <!-- ==================== شاشة التسجيل وتحديد المسار (Onboarding) ==================== -->
+  <div id="onboardingScreen" class="onboarding-overlay active">
+    <div class="onboarding-card">
+      <div class="mascot-welcome">
+        <!-- تميمة بروفيسور بابلز (أنبوب اختبار لطيف ومضحك) -->
+        <div class="bubbles-mascot">
+          <div class="beaker">
+            <div class="beaker-liquid"></div>
+            <div class="beaker-bubble bubble-a"></div>
+            <div class="beaker-bubble bubble-b"></div>
+            <div class="beaker-eyes">
+              <div class="eye left">
+                <div class="pupil"></div>
+              </div>
+              <div class="eye right">
+                <div class="pupil"></div>
+              </div>
+            </div>
+            <div class="beaker-mouth smile"></div>
+            <div class="glasses"></div>
+            <div class="grad-hat"></div>
+          </div>
+          <!-- فقاعة كلام كرتونية مضحكة للتميمة -->
+          <div class="speech-bubble" id="onboardingSpeech">
+            أهلاً بك يا بطل في جنة العلوم الساحرة! دعنا نضبط مختبرنا الشخصي أولاً.. اختر مسارك واسمك!
+          </div>
+        </div>
+      </div>
+
+      <h1 class="logo-title">جنة العلوم <span class="logo-sub">Science Paradise</span></h1>
+
+      <form id="onboardingForm" class="onboarding-form">
+        <!-- تحديد المسار الدراسي -->
+        <div class="form-group">
+          <label class="form-label font-ar">اختر لغة ومسار الدراسة / Choose Track:</label>
+          <div class="track-selector">
+            <input type="radio" name="track" id="trackArabic" value="arabic" checked>
+            <label for="trackArabic" class="track-card">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>علوم (عربي)</span>
+              <small>المدارس الحكومية والتجريبية</small>
+            </label>
+
+            <input type="radio" name="track" id="trackEnglish" value="english">
+            <label for="trackEnglish" class="track-card">
+              <i class="fa-solid fa-flask-vial"></i>
+              <span>Science (English)</span>
+              <small>Language Schools (لغات)</small>
+            </label>
+          </div>
+        </div>
+
+        <!-- اسم الطالب -->
+        <div class="form-group">
+          <label for="studentName" id="lblStudentName" class="form-label">اكتب اسمك الثنائي يا بطل العلوم:</label>
+          <input type="text" id="studentName" class="form-input" placeholder="مثال: أحمد محمد" required>
+        </div>
+
+        <!-- الصف الدراسي -->
+        <div class="form-group">
+          <label for="studentGrade" id="lblStudentGrade" class="form-label">الصف الدراسي الحالي:</label>
+          <select id="studentGrade" class="form-select">
+            <option value="prep1" data-ar="الصف الأول الإعدادي" data-en="1st Prep (Grade 7)">الصف الأول الإعدادي
+            </option>
+            <option value="prep2" data-ar="الصف الثاني الإعدادي" data-en="2nd Prep (Grade 8)">الصف الثاني الإعدادي
+            </option>
+            <option value="prep3" data-ar="الصف الثالث الإعدادي" data-en="3rd Prep (Grade 9)">الصف الثالث الإعدادي
+            </option>
+            <option value="sec1" data-ar="الصف الأول الثانوي" data-en="1st Sec (Grade 10)">الصف الأول الثانوي</option>
+          </select>
+        </div>
+
+        <button type="submit" id="btnStartJourney" class="btn-primary animate-pulse">
+          <i class="fa-solid fa-rocket"></i> انطلق إلى جنة العلوم!
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== الواجهة الرئيسية للمنصة ==================== -->
+  <div id="mainApp" class="app-container hidden">
+    <!-- شريط التنقل العلوي -->
+    <header class="app-header">
+      <div class="header-logo" id="logoReload">
+        <i class="fa-solid fa-atom logo-icon-spin"></i>
+        <div>
+          <h2 class="logo-text">جنة العلوم</h2>
+          <span class="logo-subtext">Science Paradise</span>
+        </div>
+      </div>
+
+      <!-- معلومات الطالب والتحكم بالترم والصف -->
+      <div class="header-controls">
+        <div class="student-info-badge">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <div>
+            <span id="displayStudentName" class="student-name">أهلاً بك</span>
+            <span id="displayStudentGrade" class="student-grade-badge">الصف الدراسي</span>
+          </div>
+        </div>
+
+        <!-- اختيار الترم -->
+        <div class="term-switcher-container">
+          <button class="term-btn active" id="btnTerm1" onclick="switchTerm('term1')">الترم الأول</button>
+          <button class="term-btn" id="btnTerm2" onclick="switchTerm('term2')">الترم الثاني</button>
+        </div>
+
+        <!-- زر الاشتراك -->
+        <div id="subscriptionBadgeContainer">
+          <button id="btnSubscribeNow" class="btn-subscribe-badge premium-glow" onclick="openSubscribeModal()">
+            <i class="fa-solid fa-key"></i> <span id="txtSubBadge">تفعيل الاشتراك</span>
+          </button>
+        </div>
+
+        <!-- زر لوحة المعلم -->
+        <button class="btn-teacher-panel" onclick="openTeacherLogin()" title="لوحة تحكم المعلم">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+
+        <!-- زر تغيير الطالب/المسار -->
+        <button class="btn-change-student" onclick="resetOnboarding()" title="تغيير المستخدم / المسار">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- الهيكل الأساسي ومساحة الدروس -->
+    <main class="app-main">
+      <section class="welcome-banner">
+        <div class="banner-content">
+          <h1 id="txtGreeting">مرحباً بك في عالم المعرفة والاستكشاف! 🌟</h1>
+          <p id="txtSubGreeting">شاهد الدرس الأول مجاناً، واجتز الاختبار لتحصل على وسام التميز لتفتح المراحل التالية!
+          </p>
+        </div>
+        <div class="banner-mascot">
+          <div class="mini-mascot">
+            <div class="beaker mini">
+              <div class="beaker-liquid"></div>
+              <div class="beaker-eyes mini">
+                <div class="eye mini">
+                  <div class="pupil"></div>
+                </div>
+                <div class="eye mini">
+                  <div class="pupil"></div>
+                </div>
+              </div>
+              <div class="beaker-mouth smile mini"></div>
+              <div class="glasses mini"></div>
+            </div>
+            <div class="mini-speech" id="bannerSpeech">
+              دروسك مرتبة وجاهزة، دعنا نبدأ مغامرتنا اليوم!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- قائمة الدروس والوحدات -->
+      <section class="lessons-section">
+        <div class="section-title">
+          <i class="fa-solid fa-list-check"></i>
+          <h2 id="txtLessonsTitle">دروس الفصل الدراسي المتاحة</h2>
+        </div>
+
+        <!-- الدروس ستعرض هنا عبر الجافا سكريبت بشكل بطاقات أنيقة جداً -->
+        <div class="lessons-grid" id="lessonsGrid">
+          <!-- بطاقات الدروس ديناميكية -->
+        </div>
+      </section>
+    </main>
+
+    <!-- أسفل الصفحة (Footer) -->
+    <footer class="app-footer">
+      <p>© ٢٠٢٦ منصة جنة العلوم. جميع الحقوق محفوظة للمعلمة. تواصل للتفعيل: 01032931035</p>
+    </footer>
+  </div>
+
+  <!-- ==================== المساعد الذكي العائم (AI Chat Bot) ==================== -->
+  <div id="aiAssistantWidget" class="ai-widget-container hidden">
+    <!-- زر أيقونة المساعد العائم -->
+    <button class="ai-floating-btn" onclick="toggleChatWindow()" id="aiFloatingBtn">
+      <div class="ai-btn-avatar">
+        <div class="beaker mini-chat animate-pulse">
+          <div class="beaker-liquid"></div>
+          <div class="beaker-eyes mini">
+            <div class="eye mini">
+              <div class="pupil"></div>
+            </div>
+            <div class="eye mini">
+              <div class="pupil"></div>
+            </div>
+          </div>
+          <div class="beaker-mouth smile mini"></div>
+          <div class="glasses mini"></div>
+        </div>
+      </div>
+      <span class="ai-btn-tooltip" id="txtAiTooltip">اسأل بروفيسور بابلز! 🧪</span>
+    </button>
+
+    <!-- نافذة المحادثة -->
+    <div class="ai-chat-window hidden" id="aiChatWindow">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <i class="fa-solid fa-robot"></i>
+          <div>
+            <h4 id="txtChatBotTitle">المساعد بابلز الذكي</h4>
+            <span class="chat-status" id="txtChatBotStatus">متصل (دقة منهجية 100%)</span>
+          </div>
+        </div>
+        <button class="btn-close-chat" onclick="toggleChatWindow()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- الرسائل -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- رسائل المحادثة -->
+      </div>
+
+      <!-- الأسئلة المقترحة السريعة للدرس -->
+      <div class="chat-suggestions" id="chatSuggestions">
+        <!-- أزرار الأسئلة السريعة -->
+      </div>
+
+      <!-- مدخل النص -->
+      <form class="chat-input-area" id="chatInputForm" onsubmit="handleSendChatMessage(event)">
+        <input type="text" id="chatInputText" placeholder="اسأل بابلز عن كلمة بالمنهج..." required>
+        <button type="submit" class="btn-send-chat"><i class="fa-solid fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة عرض الدرس والاختبار التفاعلي ==================== -->
+  <div id="lessonModal" class="modal-overlay hidden">
+    <div class="modal-content lesson-modal-content">
+      <button class="modal-close" onclick="closeLessonModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="lesson-modal-layout">
+        <!-- عمود الشرح والفيديو -->
+        <div class="lesson-video-column">
+          <div class="video-container">
+            <iframe id="lessonVideoIFrame" src="" title="شرح الدرس" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <div class="lesson-details">
+            <h2 id="lessonModalTitle" class="lesson-title">عنوان الدرس</h2>
+            <p id="lessonModalDesc" class="lesson-description">وصف وتفاصيل الدرس العلمي...</p>
+          </div>
+        </div>
+
+        <!-- عمود الاختبار التفاعلي -->
+        <div class="lesson-quiz-column">
+          <div class="quiz-box">
+            <div class="quiz-header">
+              <h3><i class="fa-solid fa-gamepad"></i> <span id="txtQuizHeader">الاختبار التفاعلي للدرس</span></h3>
+              <div class="quiz-progress-bar">
+                <div class="progress-fill" id="quizProgressFill" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- منطقة الأسئلة -->
+            <div class="quiz-body" id="quizBody">
+              <!-- الأسئلة ستعرض هنا ديناميكياً -->
+            </div>
+
+            <!-- صفحة النتيجة النهائية للاختبار -->
+            <div class="quiz-result hidden" id="quizResultArea">
+              <div class="result-animation">
+                <i class="fa-solid fa-medal trophy-spin"></i>
+              </div>
+              <h3 id="txtResultTitle">عمل رائع يا بطل!</h3>
+              <p class="score-text" id="quizScoreText">لقد أجبت على 3/3 بشكل صحيح!</p>
+              <div class="result-message" id="quizResultMessage">
+                لقد اجتزت الاختبار بنجاح وتم فتح المحتوى التالي!
+              </div>
+              <button class="btn-primary" onclick="closeLessonModal()"><i class="fa-solid fa-check"></i> حسناً، العودة
+                للرئيسية</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة الاشتراك وقفل الاشتراك (Subscription Modal) ==================== -->
+  <div id="subscribeModal" class="modal-overlay hidden">
+    <div class="modal-content subscribe-modal-content">
+      <button class="modal-close" onclick="closeSubscribeModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="subscribe-layout">
+        <!-- التميمة الحزينة أو الكوميدية المستعطفة -->
+        <div class="subscribe-mascot">
+          <div class="beaker sad-animation">
+            <div class="beaker-liquid sad"></div>
+            <div class="beaker-eyes sad">
+              <div class="eye left sad">
+                <div class="pupil"></div>
+              </div>
+              <div class="eye right sad">
+                <div class="pupil"></div>
+              </div>
+            </div>
+            <div class="beaker-mouth sad"></div>
+            <div class="glasses"></div>
+            <div class="tear"></div>
+          </div>
+          <div class="subscribe-speech" id="subscribeSpeech">
+            أوووه! طاقة المعمل نفذت هنا! 🔬 لفتح جميع الدروس والامتحانات والمختبرات الكاملة وتفعيل حسابك، يرجى الاشتراك
+            وتفعيل الكود السري مع بروفيسور بابلز!
+          </div>
+        </div>
+
+        <div class="subscribe-details">
+          <h2>تفعيل العضوية المميزة 💎</h2>
+          <p class="sub-intro-text">افتح كافة الفيديوهات، الاختبارات، والأوسمة لجميع المراحل الدراسية والصفوف فوراً!</p>
+
+          <div class="contact-card">
+            <p>تواصل مع المعلمة مباشرة عبر واتساب لتفعيل الاشتراك:</p>
+            <div class="phone-number">
+              <i class="fa-brands fa-whatsapp whatsapp-icon"></i>
+              <a href="https://wa.me/201032931035?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D8%B9%D9%84%D9%85%D8%AA%D9%8E%D9%8A..."
+                target="_blank" class="phone-link">01032931035</a>
+            </div>
+            <span class="whatsapp-note">(انقر على الرقم لفتح محادثة واتساب فورية)</span>
+          </div>
+
+          <!-- نموذج إدخال الكود للتفعيل -->
+          <div class="activation-form">
+            <label for="activationCodeInput" class="form-label" id="lblActivationCode">أدخل كود التفعيل السري
+              هنا:</label>
+            <div class="input-group">
+              <input type="text" id="activationCodeInput" placeholder="أدخل الكود هنا..." class="form-input">
+              <button class="btn-activate" onclick="submitActivationCode()">تفعيل الآن</button>
+            </div>
+            <p class="error-text hidden" id="activationError">الرمز غير صحيح، يرجى التحقق منه والمحاولة مرة أخرى!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة تسجيل دخول المعلم (Admin Password Modal) ==================== -->
+  <div id="teacherLoginModal" class="modal-overlay hidden">
+    <div class="modal-content auth-modal-content">
+      <button class="modal-close" onclick="closeTeacherLogin()"><i class="fa-solid fa-xmark"></i></button>
+      <h2>لوحة تحكم المعلمة 👩‍🏫</h2>
+      <p class="auth-subtext">الرجاء إدخال كلمة المرور للوصول إلى إعدادات المنصة وإضافة المناهج.</p>
+
+      <div class="form-group" style="margin-top: 20px;">
+        <input type="password" id="teacherPasswordInput" placeholder="كلمة المرور الافتراضية: science2026"
+          class="form-input text-center">
+      </div>
+      <button class="btn-primary" onclick="submitTeacherLogin()"><i class="fa-solid fa-lock-open"></i> دخول
+        اللوحة</button>
+      <p class="error-text hidden" id="teacherLoginError" style="margin-top: 10px;">كلمة المرور غير صحيحة!</p>
+    </div>
+  </div>
+
+  <!-- ==================== لوحة تحكم المعلم الكبرى (Teacher Dashboard Modal) ==================== -->
+  <div id="teacherDashboardModal" class="modal-overlay hidden">
+    <div class="modal-content dashboard-modal-content">
+      <button class="modal-close" onclick="closeTeacherDashboard()"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="dashboard-header">
+        <h2><i class="fa-solid fa-chart-line"></i> لوحة تحكم المعلمة - جنة العلوم</h2>
+        <div class="dashboard-actions">
+          <button class="btn-secondary" onclick="exportCurriculum()"><i class="fa-solid fa-download"></i> تصدير
+            المنهج</button>
+          <button class="btn-secondary" onclick="document.getElementById('importFileInput').click()"><i
+              class="fa-solid fa-upload"></i> استيراد منهج</button>
+          <input type="file" id="importFileInput" style="display: none;" onchange="importCurriculum(event)"
+            accept=".json">
+          <button class="btn-danger" onclick="resetAllData()"><i class="fa-solid fa-rotate-left"></i> ضبط
+            المصنع</button>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- عمود التحكم في التفعيل والطلاب -->
+        <div class="dashboard-panel">
+          <h3><i class="fa-solid fa-gears"></i> إعدادات المنصة والاشتراك</h3>
+          <div class="form-group" style="margin-top: 15px;">
+            <label class="form-label">رمز تفعيل الطلاب الحالي:</label>
+            <input type="text" id="adminActivationCode" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">رقم التواصل للواتساب:</label>
+            <input type="text" id="adminContactPhone" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">كلمة مرور اللوحة:</label>
+            <input type="text" id="adminTeacherPassword" class="form-input">
+          </div>
+          <button class="btn-primary" onclick="saveAdminSettings()"><i class="fa-solid fa-floppy-disk"></i> حفظ
+            الإعدادات</button>
+
+          <!-- قائمة الطلاب المسجلين بالمتصفح وتقدمهم -->
+          <h3 style="margin-top: 30px;"><i class="fa-solid fa-user-group"></i> الطلاب المسجلون محلياً</h3>
+          <div class="students-list-wrapper">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>الطالب</th>
+                  <th>المسار</th>
+                  <th>الصف</th>
+                  <th>الاشتراك</th>
+                  <th>العمليات</th>
+                </tr>
+              </thead>
+              <tbody id="adminStudentsList">
+                <!-- قائمة الطلاب تملأ بالجافا سكريبت -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- عمود إضافة درس جديد باختباره -->
+        <div class="dashboard-panel">
+          <h3><i class="fa-solid fa-circle-plus"></i> إضافة درس جديد واختباره وتغذيته للذكاء الاصطناعي</h3>
+
+          <form id="addLessonForm" onsubmit="saveNewLesson(event)">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">المسار الدراسي:</label>
+                <select id="addLessonTrack" class="form-select">
+                  <option value="arabic">علوم (عربي)</option>
+                  <option value="english">Science (English)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">الصف الدراسي:</label>
+                <select id="addLessonGrade" class="form-select">
+                  <option value="prep1">الصف الأول الإعدادي / 1st Prep</option>
+                  <option value="prep2">الصف الثاني الإعدادي / 2nd Prep</option>
+                  <option value="prep3">الصف الثالث الإعدادي / 3rd Prep</option>
+                  <option value="sec1">الصف الأول الثانوي / 1st Sec</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">الفصل الدراسي (الترم):</label>
+                <select id="addLessonTerm" class="form-select">
+                  <option value="term1">الترم الأول</option>
+                  <option value="term2">الترم الثاني</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">عنوان الدرس:</label>
+                <input type="text" id="addLessonTitle" class="form-input"
+                  placeholder="مثال: الدرس الثالث: الطاقة ومصادرها" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">وصف الدرس:</label>
+              <textarea id="addLessonDesc" class="form-input textarea-short"
+                placeholder="اكتب نبذة مختصرة عن الدرس لشرحه للطالب..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">رابط فيديو الشرح (YouTube):</label>
+              <input type="url" id="addLessonVideo" class="form-input" placeholder="https://www.youtube.com/embed/..."
+                required>
+            </div>
+
+            <!-- إضافة محتوى المساعد الذكي -->
+            <div class="admin-quiz-creation" style="margin-bottom: 15px;">
+              <h4 style="color: var(--primary-dark); font-weight: 800;"><i class="fa-solid fa-robot"></i> مادة المساعد
+                الذكي (قاعدة المعرفة)</h4>
+              <div class="form-group" style="margin-top: 10px;">
+                <label class="form-label">الشرح العلمي الدقيق للدرس (مذكرة الدرس للمساعد):</label>
+                <textarea id="addLessonStudyNotes" class="form-input textarea-short"
+                  placeholder="اكتب ملخصاً وتفاصيل المنهج الخاصة بهذا الدرس. سيبحث فيه المساعد الذكي ليجيب إجابات صحيحة بنسبة 100%..."
+                  required></textarea>
+              </div>
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">السؤال الشائع الأول:</label>
+                  <input type="text" id="addLessonFaq1Q" class="form-input"
+                    placeholder="سؤال شائع (مثال: ما هي الكثافة؟)">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">إجابته النموذجية الدقيقة:</label>
+                  <input type="text" id="addLessonFaq1A" class="form-input" placeholder="الجواب النموذجي المباشر">
+                </div>
+              </div>
+              <div class="form-row-2" style="margin-top: 5px;">
+                <div class="form-group">
+                  <label class="form-label">السؤال الشائع الثاني:</label>
+                  <input type="text" id="addLessonFaq2Q" class="form-input" placeholder="سؤال شائع ثانٍ">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">إجابته النموذجية الدقيقة:</label>
+                  <input type="text" id="addLessonFaq2A" class="form-input" placeholder="الجواب النموذجي المباشر">
+                </div>
+              </div>
+            </div>
+
+            <!-- إضافة أسئلة الاختبار -->
+            <div class="admin-quiz-creation">
+              <h4>أسئلة الاختبار التفاعلي (حد اقصي عشر اسئله)</h4>
+
+              <div class="questions-builder" id="questionsBuilder">
+                <div class="question-item" data-qindex="0">
+                  <div class="form-group">
+                    <label class="form-label-bold">السؤال الأول:</label>
+                    <input type="text" class="form-input q-text" placeholder="اكتب نص السؤال هنا..." required>
+                  </div>
+                  <div class="options-grid">
+                    <input type="text" class="form-input q-opt-0" placeholder="الاختيار الأول" required>
+                    <input type="text" class="form-input q-opt-1" placeholder="الاختيار الثاني" required>
+                    <input type="text" class="form-input q-opt-2" placeholder="الاختيار الثالث" required>
+                    <input type="text" class="form-input q-opt-3" placeholder="الاختيار الرابع" required>
+                  </div>
+                  <div class="form-group" style="margin-top: 10px;">
+                    <label class="form-label">الإجابة الصحيحة:</label>
+                    <select class="form-select q-correct">
+                      <option value="0">الاختيار الأول</option>
+                      <option value="1">الاختيار الثاني</option>
+                      <option value="2">الاختيار الثالث</option>
+                      <option value="3">الاختيار الرابع</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="question-item" data-qindex="1">
+                  <div class="form-group">
+                    <label class="form-label-bold">السؤال الثاني:</label>
+                    <input type="text" class="form-input q-text" placeholder="اكتب نص السؤال هنا (اختياري)">
+                  </div>
+                  <div class="options-grid">
+                    <input type="text" class="form-input q-opt-0" placeholder="الاختيار الأول">
+                    <input type="text" class="form-input q-opt-1" placeholder="الاختيار الثاني">
+                    <input type="text" class="form-input q-opt-2" placeholder="الاختيار الثالث">
+                    <input type="text" class="form-input q-opt-3" placeholder="الاختيار الرابع">
+                  </div>
+                  <div class="form-group" style="margin-top: 10px;">
+                    <label class="form-label">الإجابة الصحيحة:</label>
+                    <select class="form-select q-correct">
+                      <option value="0">الاختيار الأول</option>
+                      <option value="1">الاختيار الثاني</option>
+                      <option value="2">الاختيار الثالث</option>
+                      <option value="3">الاختيار الرابع</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary animate-pulse" style="margin-top: 20px;"><i
+                class="fa-solid fa-plus"></i> حفظ ونشر الدرس الجديد</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ملف المنطق وملف البيانات الافتراضية -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
