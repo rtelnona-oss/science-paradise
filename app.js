@@ -114,12 +114,21 @@ function initData() {
 function checkSavedStudent() {
   const savedStudent = localStorage.getItem("science_paradise_student");
   if (savedStudent) {
-    currentStudent = JSON.parse(savedStudent);
-    loginStudent(currentStudent);
-  } else {
-    // إظهار شاشة التسجيل وتحديث نصوصها
-    updateOnboardingTexts("arabic");
+    try {
+      currentStudent = JSON.parse(savedStudent);
+      if (currentStudent && currentStudent.name && currentStudent.track && currentStudent.grade) {
+        loginStudent(currentStudent);
+        return;
+      }
+    } catch (e) {
+      console.error("Error parsing saved student data:", e);
+    }
   }
+  
+  // إذا كانت البيانات تالفة أو غير مكتملة، نحذفها ونظهر شاشة تسجيل جديدة
+  localStorage.removeItem("science_paradise_student");
+  currentStudent = null;
+  updateOnboardingTexts("arabic");
 }
 
 // تحديث نصوص شاشة التسجيل بناءً على المسار المختار (عربي / إنجليزي)
