@@ -88,7 +88,68 @@ document.addEventListener("DOMContentLoaded", () => {
   checkSavedStudent();
   setupEventListeners();
   generateFloatingBubbles();
+  handleDeepLink();
 });
+
+// معالجة روابط الدروس المباشرة (Deep Linking)
+function handleDeepLink() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const lessonId = urlParams.get('lesson');
+  if (!lessonId) return;
+
+  // البحث عن الدرس في المنهج بالكامل
+  let foundLesson = null;
+  let foundTrack = "arabic";
+  let foundGrade = "prep1";
+  let foundTerm = "term1";
+
+  for (const track of ["arabic", "english"]) {
+    for (const grade of ["prep1", "prep2", "prep3", "sec1"]) {
+      for (const term of ["term1", "term2"]) {
+        const lessons = (curriculumData[track] && curriculumData[track][grade] && curriculumData[track][grade][term]) || [];
+        const lesson = lessons.find(l => l.id === lessonId);
+        if (lesson) {
+          foundLesson = lesson;
+          foundTrack = track;
+          foundGrade = grade;
+          foundTerm = term;
+          break;
+        }
+      }
+      if (foundLesson) break;
+    }
+    if (foundLesson) break;
+  }
+
+  if (!foundLesson) return;
+
+  // إذا لم يكن هناك طالب مسجل، نسجله كزائر تلقائياً لفتح الصفحة مباشرة
+  if (!currentStudent) {
+    currentStudent = {
+      name: foundTrack === "arabic" ? "بطل العلوم" : "Science Hero",
+      track: foundTrack,
+      grade: foundGrade,
+      subscribed: true, // تفعيل التسهيل لمشاهدة الفيديو المباشر من الرابط
+      completedLessons: []
+    };
+    localStorage.setItem("science_paradise_student", JSON.stringify(currentStudent));
+    loginStudent(currentStudent);
+  } else {
+    // إذا كان مسجلاً بالفعل، نتأكد من ضبط المسار والترم المناسب للدرس
+    currentStudent.track = foundTrack;
+    currentStudent.grade = foundGrade;
+    localStorage.setItem("science_paradise_student", JSON.stringify(currentStudent));
+    loginStudent(currentStudent);
+  }
+
+  // ضبط الترم
+  switchTerm(foundTerm);
+
+  // فتح نافذة الدرس بعد نصف ثانية لضمان رندرة الصفحة بشكل كامل
+  setTimeout(() => {
+    openLessonModal(lessonId);
+  }, 500);
+}
 
 // تهيئة البيانات وتخزين المنهج الافتراضي
 function initData() {
